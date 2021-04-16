@@ -1,23 +1,36 @@
-import {GET_TOPIC_PHOTOS_SUCCESS, GET_TOPIC_SUCCESS, LIKE_PHOTO_SUCCESS, RESET_TOPIC_PHOTOS} from "../actions/general";
+import {
+  GET_TOPIC_PHOTOS_SUCCESS,
+  GET_TOPIC_SUCCESS,
+  TOGGLE_LIKE_PHOTO_SUCCESS,
+  RESET_TOPIC_PHOTOS,
+  GET_TOPIC_REQUEST
+} from "../actions/general";
 
 const initialState = {
   topic: {},
   topicPhotos: [],
+  loading: false,
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case GET_TOPIC_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
     case GET_TOPIC_SUCCESS:
       return {
         ...state,
-        topic: action.data
+        topic: action.data,
+        loading: false,
       };
     case GET_TOPIC_PHOTOS_SUCCESS:
       return {
         ...state,
         topicPhotos: [...state.topicPhotos, ...action.data]
       };
-    case LIKE_PHOTO_SUCCESS:
+    case TOGGLE_LIKE_PHOTO_SUCCESS:
       return {
         ...state,
         topicPhotos: action.data

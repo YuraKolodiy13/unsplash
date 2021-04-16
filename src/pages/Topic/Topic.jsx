@@ -1,6 +1,11 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getTopicPhotosRequest, getTopicRequest, likePhotoRequest, resetTopicPhotos} from "../../actions/general";
+import {
+  getTopicPhotosRequest,
+  getTopicRequest,
+  resetTopicPhotos,
+  toggleLikePhotoRequest
+} from "../../actions/general";
 import {Link, useParams} from "react-router-dom";
 import 'photoswipe/dist/photoswipe.css'
 import 'photoswipe/dist/default-skin/default-skin.css'
@@ -9,6 +14,7 @@ import {Gallery, Item} from 'react-photoswipe-gallery'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {ReactComponent as LikeIcon} from '../../assets/images/like.svg';
 import Tooltip from "@material-ui/core/Tooltip";
+import Loader from "../../components/Loader/Loader";
 
 const Topic = () => {
 
@@ -16,6 +22,7 @@ const Topic = () => {
   const {slug} = useParams();
   const topic = useSelector(state => state.general.topic);
   const topicPhotos = useSelector(state => state.general.topicPhotos);
+  const loading = useSelector(state => state.general.loading);
 
   useEffect(() => {
     if(!!topicPhotos.length) dispatch(resetTopicPhotos());
@@ -25,9 +32,10 @@ const Topic = () => {
 
   const toggleLike = (e, liked, id) => {
     e.stopPropagation();
-    if(liked) console.log('is liked');
-    else dispatch(likePhotoRequest(id));
+    dispatch(toggleLikePhotoRequest({liked, id}));
   };
+
+  if(loading) return <Loader/>;
 
   return (
     <div className='TopicPage'>

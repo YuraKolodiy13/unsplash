@@ -13,8 +13,14 @@ export const getTopicPhotosApi = ({topic, page = 1}) => {
   )
 };
 
-export const likePhotoApi = (id) => {
+export const likePhotoApi = ({id}) => {
+  console.log(id, 'id')
   return service.post(
+    `${API_URL}/photos/${id}/like`,
+  )
+};
+export const unlikePhotoApi = ({id}) => {
+  return service.delete(
     `${API_URL}/photos/${id}/like`,
   )
 };

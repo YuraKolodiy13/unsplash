@@ -10,10 +10,10 @@ export const GET_TOPIC_PHOTOS_SUCCESS = 'GET_TOPIC_PHOTOS_SUCCESS';
 export const GET_TOPIC_PHOTOS_FAILED = 'GET_TOPIC_PHOTOS_FAILED';
 export const getTopicPhotosRequest = defaultActionCreator(GET_TOPIC_PHOTOS_REQUEST, 'data');
 
-export const LIKE_PHOTO_REQUEST = 'LIKE_PHOTO_REQUEST';
-export const LIKE_PHOTO_SUCCESS = 'LIKE_PHOTO_SUCCESS';
-export const LIKE_PHOTO_FAILED = 'LIKE_PHOTO_FAILED';
-export const likePhotoRequest = defaultActionCreator(LIKE_PHOTO_REQUEST, 'data');
+export const TOGGLE_LIKE_PHOTO_REQUEST = 'TOGGLE_LIKE_PHOTO_REQUEST';
+export const TOGGLE_LIKE_PHOTO_SUCCESS = 'TOGGLE_LIKE_PHOTO_SUCCESS';
+export const TOGGLE_LIKE_PHOTO_FAILED = 'TOGGLE_LIKE_PHOTO_FAILED';
+export const toggleLikePhotoRequest = defaultActionCreator(TOGGLE_LIKE_PHOTO_REQUEST, 'data');
 
 export const RESET_TOPIC_PHOTOS = 'RESET_TOPIC_PHOTOS';
 export const resetTopicPhotos = defaultActionCreator(RESET_TOPIC_PHOTOS, 'data');
