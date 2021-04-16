@@ -3,11 +3,11 @@ import {
   GET_TOPIC_SUCCESS,
   TOGGLE_LIKE_PHOTO_SUCCESS,
   RESET_TOPIC_PHOTOS,
-  GET_TOPIC_REQUEST
+  GET_TOPIC_REQUEST, GET_TOPIC_FAILED
 } from "../actions/general";
 
 const initialState = {
-  topic: {},
+  topic: null,
   topicPhotos: [],
   loading: false,
 };
@@ -23,6 +23,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         topic: action.data,
+        loading: false,
+      };
+    case GET_TOPIC_FAILED:
+      return {
+        ...state,
         loading: false,
       };
     case GET_TOPIC_PHOTOS_SUCCESS:
