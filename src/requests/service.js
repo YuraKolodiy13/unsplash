@@ -22,7 +22,7 @@ class Service {
     return this.service.get(path, {
       params,
       headers: {
-        // 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`,
+        'Authorization': localStorage.getItem('token'),
         'Access-Control-Allow-Origin': '*'
       }
     }).then(
@@ -37,7 +37,7 @@ class Service {
       responseType: 'json',
       data: payload,
       headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`,
+        'Authorization': localStorage.getItem('token'),
         'Access-Control-Allow-Origin': '*'
       }
     }).then(response => callback ? callback(response.status, response.data) : response);
@@ -50,7 +50,7 @@ class Service {
       responseType: 'json',
       data: payload,
       headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`,
+        'Authorization': localStorage.getItem('token'),
         'Access-Control-Allow-Origin': '*'
       }
     }).then(response => callback ? callback(response.status, response.data) : response)
@@ -63,9 +63,9 @@ class Service {
       responseType: 'json',
       data: payload,
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).access_token : ''}`,
-        'Access-Control-Allow-Origin': '*'
-      }
+        'Authorization': localStorage.getItem('token'),
+        // 'Access-Control-Allow-Origin': '*',
+  }
     }).then((response) => callback ? callback(response.status, response.data) : response)
   }
 
@@ -76,7 +76,7 @@ class Service {
       responseType: 'json',
       data: payload,
       headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`,
+        'Authorization': localStorage.getItem('token'),
         'Access-Control-Allow-Origin': '*'
       }
     }).then((response) => callback ? callback(response.status, response.data) : response)

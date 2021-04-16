@@ -1,19 +1,11 @@
-import { all, select, call, put, takeLatest } from 'redux-saga/effects'
+import { all, call, put, takeLatest } from 'redux-saga/effects'
 
 import * as generalActions from '../actions/general'
 import {
   getTopicApi,
-  getTopicsApi,
+  getTopicPhotosApi, likePhotoApi,
 } from "../requests/general";
-
-export function* getTopics() {
-  try {
-    const response = yield call(getTopicsApi);
-    yield put({type: generalActions.GET_TOPICS_SUCCESS, data: response.data});
-  } catch (e) {
-    yield put({ type: generalActions.GET_TOPICS_FAILED, error: e.response });
-  }
-}
+import {select, takeLeading} from "@redux-saga/core/effects";
 
 export function* getTopic(action) {
   try {
@@ -24,7 +16,28 @@ export function* getTopic(action) {
   }
 }
 
+export function* getTopicPhotos(action) {
+  try {
+    const response = yield call(getTopicPhotosApi, action.data);
+    yield put({type: generalActions.GET_TOPIC_PHOTOS_SUCCESS, data: response.data});
+  } catch (e) {
+    yield put({ type: generalActions.GET_TOPIC_PHOTOS_FAILED, error: e.response });
+  }
+}
+
+export function* likePhoto(action) {
+  try {
+    const response = yield call(likePhotoApi, action.data);
+    const topicPhotos = yield select(state => state.general.topicPhotos);
+    const updatedPhotos = topicPhotos.map(item => action.data === item.id ? response.data.photo : item);
+    yield put({type: generalActions.LIKE_PHOTO_SUCCESS, data: updatedPhotos});
+  } catch (e) {
+    yield put({ type: generalActions.LIKE_PHOTO_FAILED, error: e.response });
+  }
+}
+
 export default all([
-  takeLatest(generalActions.GET_TOPICS_REQUEST, getTopics),
   takeLatest(generalActions.GET_TOPIC_REQUEST, getTopic),
+  takeLatest(generalActions.GET_TOPIC_PHOTOS_REQUEST, getTopicPhotos),
+  takeLeading(generalActions.LIKE_PHOTO_REQUEST, likePhoto),
 ])
