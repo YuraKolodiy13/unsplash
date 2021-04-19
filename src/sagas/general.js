@@ -3,7 +3,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects'
 import * as generalActions from '../actions/general'
 import {
   getTopicApi,
-  getTopicPhotosApi, likePhotoApi, unlikePhotoApi,
+  getTopicPhotosApi, getUserApi, getUserPhotosApi, likePhotoApi, unlikePhotoApi,
 } from "../requests/general";
 import {select, takeLeading} from "@redux-saga/core/effects";
 
@@ -38,8 +38,32 @@ export function* toggleLikePhoto(action) {
   }
 }
 
+export function* getUser(action) {
+  try {
+    const response = yield call(getUserApi, action.data);
+    localStorage.setItem('user', JSON.stringify(response.data));
+    yield put({type: generalActions.GET_USER_SUCCESS, data: response.data});
+
+    yield put({type: generalActions.GET_USER_PHOTOS_REQUEST, data: {username: action.data}});
+  } catch (e) {
+    yield put({ type: generalActions.GET_USER_FAILED, error: e.response });
+  }
+}
+
+export function* getUserPhotos(action) {
+  try {
+    const response = yield call(getUserPhotosApi, action.data);
+    localStorage.setItem('userPhotos', JSON.stringify(response.data));
+    yield put({type: generalActions.GET_USER_PHOTOS_SUCCESS, data: response.data});
+  } catch (e) {
+    yield put({ type: generalActions.GET_USER_PHOTOS_FAILED, error: e.response });
+  }
+}
+
 export default all([
   takeLatest(generalActions.GET_TOPIC_REQUEST, getTopic),
   takeLatest(generalActions.GET_TOPIC_PHOTOS_REQUEST, getTopicPhotos),
   takeLeading(generalActions.TOGGLE_LIKE_PHOTO_REQUEST, toggleLikePhoto),
+  takeLeading(generalActions.GET_USER_REQUEST, getUser),
+  takeLeading(generalActions.GET_USER_PHOTOS_REQUEST, getUserPhotos),
 ])

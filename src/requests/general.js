@@ -14,7 +14,6 @@ export const getTopicPhotosApi = ({topic, page = 1}) => {
 };
 
 export const likePhotoApi = ({id}) => {
-  console.log(id, 'id')
   return service.post(
     `${API_URL}/photos/${id}/like`,
   )
@@ -22,5 +21,17 @@ export const likePhotoApi = ({id}) => {
 export const unlikePhotoApi = ({id}) => {
   return service.delete(
     `${API_URL}/photos/${id}/like`,
+  )
+};
+
+export const getUserApi = (username) => {
+  return service.get(
+    `${API_URL}/users/${username}?client_id=${CLIENT_ID}`,
+  )
+};
+
+export const getUserPhotosApi = ({username, page = 1}) => {
+  return service.get(
+    `${API_URL}/users/${username}/photos?page=${page}&client_id=${CLIENT_ID}`,
   )
 };

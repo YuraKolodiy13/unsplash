@@ -5,6 +5,7 @@ import Topic from "./pages/Topic/Topic";
 import './assets/styles/globals.scss'
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import User from "./pages/User/User";
 
 const App = () => {
 
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/" component={Home} exact/>
         <Route path="/login" component={Login} />
         <Route path="/topics/:slug" component={Topic} />
+        <Route path="/users/:username" component={User} />
       </Switch>
     </div>
   );

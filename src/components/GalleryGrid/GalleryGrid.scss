@@ -1,0 +1,122 @@
+.GalleryGrid{
+  .grid-gallery .infinite-scroll-component {
+    position: relative;
+    box-sizing: border-box;
+    display: grid;
+    grid-auto-rows: 200px;
+    grid-gap: 0.5rem;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(4, 1fr);
+    .destination {
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      transform: translate3d(0, 0, 0);
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+
+      &:nth-of-type(10n + 2){
+        grid-column: span 2;
+      }
+      &:nth-of-type(10n + 4),
+      &:nth-of-type(10n + 9),
+      &:nth-of-type(10n + 10){
+        grid-row: span 2;
+      }
+      &:nth-of-type(10n + 5),
+      &:nth-of-type(10n + 8){
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      &:hover{
+        .overlay {
+          opacity: 1;
+          box-shadow: 0 0 6px 3px rgb(14, 14, 14);
+          border-radius: 3px;
+
+          .user {
+            pointer-events: auto;
+          }
+        }
+      }
+
+      @media (min-width: 790px) {
+        &.vertical {
+          grid-row: span 2;
+        }
+
+        &.horizontal {
+          grid-column: span 2;
+        }
+
+        &.big {
+          grid-column: span 2;
+          grid-row: span 2;
+        }
+      }
+
+      .overlay {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: #0000009c;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        transition: opacity 0.3s;
+        padding: 10px;
+        box-sizing: border-box;
+        .user {
+          cursor: pointer;
+          pointer-events: none;
+          transition: .3s;
+          display: flex;
+          align-items: center;
+          img{
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 8px;
+          }
+          a{
+            color: #fff;
+            opacity: .8;
+            transition: .3s;
+            text-decoration: none;
+            font-size: 15px;
+          }
+
+          &:hover a{
+            opacity: 1;
+          }
+        }
+        .actions{
+          .like{
+            &.active,
+            &:hover{
+              path{
+                fill: #f15151;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
